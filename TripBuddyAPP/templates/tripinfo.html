@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Trip {{view_trip.des}} </h1>
+    <p>Planned by: {{view_trip.planner.fname}} {{view_trip.planner.lname}}  </p>
+    <p>Description: {{view_trip.desc}}  </p>
+    <p>Start Date: {{view_trip.sdate|date:'M d Y'}}  </p>
+    <p>Endate: {{view_trip.edate|date:'M d Y'}}  </p>
+    <ul><h3>Other people who plan to join this trip: </h3>
+    {% for joiner in alljoiners %}
+        <li> {{joiner.fname}} {{joiner.lname}} </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

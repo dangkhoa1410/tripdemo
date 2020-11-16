@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Create a New Wish List Item</h1>
+    {% for message in messages %}
+    <p style="color: red;">{{message}}</p>
+    {% endfor %}
+    <form action="/newtrip" method="post">
+        {% csrf_token %}
+        <p>Destination: <input type="text" name="new_des" id=""></p>
+        <p>Description: <input type="text" name="new_desc" id=""></p>
+        <p>Start Date: <input type="date" name="new_sdate" id=""></p>
+        <p>End Date: <input type="date" name="new_edate" id=""></p>
+        <input type="submit" value="Add">
+    </form>
+    <br><br>
+    <a href="/travels">Back</a>   
+    <a href="/logout">Logout</a>
+</body>
+</html>

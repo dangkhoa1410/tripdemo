@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+</head>
+<body>
+    <h1>Hello {{currentuser.fname}} {{currentuser.lname}}, </h1>
+    <a href="/logout"><input type="button" value="Logout"></a>
+    <h2>Your Wish List:</h2>
+    
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Travel Start</th>
+            <th>Travel End</th>
+            <th>Plan</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            {% for trip in trip_by_user %}
+            {% if trip not in join_trips %}
+            <td><a href="/view/{{trip.id}}">{{trip.des}}</a></td>
+            <td>{{trip.sdate|date:'M d Y'}}</td>
+            <td>{{trip.edate|date:'M d Y'}}</td>
+            <td>{{trip.desc}}</td>
+            {% if currentuser.id == trip.planner.id %}
+            <td><a href="/delete/{{trip.id}}"><input type="submit" value="Delete"></a></td>
+            {% else %}
+            <td><a href="/cancel/{{trip.id}}"><input type="button" value="Cancel"></a></td>
+            {% endif %}
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+
+            {% for trip in join_trips %}
+            <td><a href="/view/{{trip.id}}">{{trip.des}}</a></td>
+            <td>{{trip.sdate|date:'M d Y'}}</td>
+            <td>{{trip.edate|date:'M d Y'}}</td>
+            <td>{{trip.desc}}</td>
+            {% if currentuser.id == trip.planner.id %}
+            <td><a href="/cancel/{{trip.id}}"><input type="button" value="Cancel"></a></td>
+            <td><a href="/delete/{{trip.id}}"><input type="submit" value="Delete"></a></td>
+            {% else %}
+            <td><a href="/cancel/{{trip.id}}"><input type="button" value="Cancel"></a></td>
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+
+        
+        
+    </table>
+    <h2>Other Users' Wish List</h2>
+    <table>
+        
+        <tr>
+            <th>Destination</th>
+            <th>Travel Start</th>
+            <th>Travel End</th>
+            <th>Planner</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            {% for trip in other_trips %}
+          <td><a href="/view/{{trip.id}}">{{trip.des}}</a></td>
+          <td>{{trip.sdate|date:'M d Y'}}</td>
+          <td>{{trip.edate|date:'M d Y'}}</td>
+          <td>{{trip.planner.fname}}</td>
+          <td><a href="/join/{{trip.id}}"><input type="button" value="Join Trip"></a></td>
+        </tr>
+        {% endfor %}    
+    </table>
+    
+    <br>
+    <a href="/addtrip"><button>Create New Trip</button></a>
+    
+</body>
+</html>
